@@ -11,7 +11,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  job-1:
+  job-1-dep-to-github:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -30,7 +30,32 @@ jobs:
           dir -a
           cat test.txt
           az --version
-      - name: Login via Azure CLI
-        uses: azure/login@v1 
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      #- name: Login via Azure CLI
+      #  uses: azure/login@v1 
+       # with:
+       #   creds: ${{ secrets.AZURE_CREDENTIALS }}
+# This workflow contains a single job called "build"
+  job-1-dep-to-local-machine:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          dir -a
+          cat test.txt
+          az --version
+      #- name: Login via Azure CLI
+       # uses: azure/login@v1 
+      # with:
+      #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+#
