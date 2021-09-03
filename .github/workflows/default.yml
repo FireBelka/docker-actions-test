@@ -30,10 +30,10 @@ jobs:
           dir -a
           cat test.txt
           az --version
-      #- name: Login via Azure CLI
-      #  uses: azure/login@v1 
-       # with:
-       #   creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Login via Azure CLI
+        uses: azure/login@v1 
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 # This workflow contains a single job called "build"
   job-1-dep-to-local-machine:
     # The type of runner that the job will run on
