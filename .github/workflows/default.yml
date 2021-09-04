@@ -7,6 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the Main branch
   push:
     branches: [ Main ] 
+env:
+  ZIP_NAME: last_commit.zip
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,10 +32,21 @@ jobs:
           dir -a
           cat test.txt
           az --version
-      #- name: Login via Azure CLI
-      #  uses: azure/login@v1 
-      #  with:
-      #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Login via Azure CLI
+        uses: azure/login@v1 
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: create zip
+        run: zip -r ${{env.ZIP_NAME}} ./ -x *.git*
+      - name: upload code to storage acc
+        uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+        with:
+          source_dir: ${{env.ZIP_NAME}}
+          container_name: 'app-code'
+          connection_string: ${{ secrets.CONNECTION_STRING_STORAGE }}
+          sync: true
+          sas_token: ${{secrets.SAS_TOKEN_STORAGE}}
+
 # This workflow contains a single job called "build"
   job-1-dep-to-local-machine:
     # The type of runner that the job will run on
