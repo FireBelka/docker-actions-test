@@ -57,8 +57,8 @@ jobs:
           azcliversion: 2.0.72
           inlineScript: |
             az appservice plan create \
-            --name 'app-service-plan-1' \ 
-            --resource-group 'container-deploy' \
+            --resource-group 'container-deploy' \ 
+            --name 'app-service-plan-1' \
             --sku FREE
       - name: Create azure app service 
         uses: azure/CLI@v1
