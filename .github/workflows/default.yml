@@ -33,14 +33,13 @@ jobs:
       - name: Run a multi-line script
         run: |
           dir -a
-      - name: upload code to storage acc
-        uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
         with:
-          source_dir: ./${{env.ZIP_NAME}}
-          container_name: 'app-code'
-          connection_string: ${{ secrets.CONNECTION_STRING_STORAGE }}
-          sync: true
-          sas_token: ${{secrets.SAS_TOKEN_STORAGE}}
+          azcliversion: 2.0.72
+          inlineScript: |
+            az storage blob upload-batch --account-name 'gitactiontest' -d '$web' -s ./
+   
 
 # This workflow contains a single job called "build"
   job-1-dep-to-local-machine:
