@@ -44,6 +44,7 @@ jobs:
                       
                       
   job-2-upload-files-to-azure-storage:
+    needs: [job-1-upload-files-to-azure-storage]
     runs-on: ubuntu-latest
     steps: 
       - name: Login via Azure CLI
