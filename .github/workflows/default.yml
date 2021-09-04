@@ -38,31 +38,33 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
-   
+            az storage blob delete-batch -s app-code
+         #    az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
+          
 
 # This workflow contains a single job called "build"
-  job-1-dep-to-local-machine:
+#  job-1-dep-to-local-machine:
     # The type of runner that the job will run on
-    runs-on: local--x220
+#    runs-on: local--x220
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+ #   steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+ #     - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+ #     - name: Run a one-line script
+  #      run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          dir -a
-          cat test.txt
-          az --version
+   #   - name: Run a multi-line script
+    #    run: |
+     #     dir -a
+      #    cat test.txt
+       #   az --version
       #- name: Login via Azure CLI
        # uses: azure/login@v1 
       # with:
       #    creds: ${{ secrets.AZURE_CREDENTIALS }}
 #
+
