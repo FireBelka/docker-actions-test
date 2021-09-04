@@ -38,10 +38,11 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az storage blob delete-batch --account-name 'gitactiontest' -s app-code
-         #    az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
+            az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
           
-
+#  az storage blob delete-batch --account-name 'gitactiontest' -s app-code
+#   az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
+                      
 # This workflow contains a single job called "build"
 #  job-1-dep-to-local-machine:
     # The type of runner that the job will run on
