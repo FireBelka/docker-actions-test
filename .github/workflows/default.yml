@@ -13,7 +13,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  job-1-dep-to-github:
+  job-1-upload-files-to-azure-storage:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
  
@@ -38,11 +38,36 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*.zip"
-          
+            az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*.zip"        
 #  az storage blob delete-batch --account-name 'gitactiontest' -s app-code
 #   az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
                       
+                      
+  job-2-upload-files-to-azure-storage:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Login via Azure CLI
+        uses: azure/login@v1 
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Create azure app service plan 
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.0.72
+          inlineScript: |
+            az appservice plan create \
+            --name 'app-service-plan-1' \ 
+            --resource-group 'container-deploy' \
+            --sku FREE
+      - name: Create azure app service 
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.0.72
+          inlineScript: |
+            az webapp create \
+            --name 'webapp-${{github.sha}}\ 
+            --resource-group 'container-deploy'  \
+            --plan 'app-service-plan-1'
 # This workflow contains a single job called "build"
 #  job-1-dep-to-local-machine:
     # The type of runner that the job will run on
