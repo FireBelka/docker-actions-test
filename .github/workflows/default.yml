@@ -41,7 +41,7 @@ jobs:
       - name: upload code to storage acc
         uses: bacongobbler/azure-blob-storage-upload@v1.2.0
         with:
-          source_dir: ${{env.ZIP_NAME}}
+          source_dir: ./${{env.ZIP_NAME}}
           container_name: 'app-code'
           connection_string: ${{ secrets.CONNECTION_STRING_STORAGE }}
           sync: true
