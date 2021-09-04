@@ -56,19 +56,13 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az appservice plan create \
-            --resource-group 'container-deploy' \ 
-            --name 'app-service-plan-1' \
-            --sku FREE
+            az appservice plan create --resource-group 'container-deploy' --name 'app-service-plan-1' --sku FREE
       - name: Create azure app service 
         uses: azure/CLI@v1
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az webapp create \
-            --name 'webapp-${{github.sha}}\ 
-            --resource-group 'container-deploy'  \
-            --plan 'app-service-plan-1'
+            az webapp create --name 'webapp-${{github.sha}} --resource-group 'container-deploy'  --plan 'app-service-plan-1'
 # This workflow contains a single job called "build"
 #  job-1-dep-to-local-machine:
     # The type of runner that the job will run on
