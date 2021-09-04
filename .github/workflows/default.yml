@@ -38,7 +38,7 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
+            az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*!(.git*)*"
           
 #  az storage blob delete-batch --account-name 'gitactiontest' -s app-code
 #   az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
