@@ -73,7 +73,7 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az webapp create -g 'container-deploy' -p 'plan-1' -n 'apache-web-app-app-service' -i 'containerreg220112.azurecr.io/apache2-container-test' -s '${{ secrets.CONTAINER_REGISTRY_USERNAME }}' -w '${{ secrets.CONTAINER_REGISTRY_PASSWORD }}'
+            az webapp create -g 'container-deploy' -p 'plan-1' -n 'apache-web-app-app-service' -i 'containerreg220112.azurecr.io/apache2-container-test' 
 #      - name: 'Deploy to Azure Container Instances'
  #       uses: 'azure/aci-deploy@v1'
   #      with:
