@@ -57,8 +57,8 @@ jobs:
             username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
             password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
       - run: |
-            docker build . -t apache2-container-test
-            docker push apache2-container-test
+            docker build . -t containerreg220112.azurecr.io/apache2-container-test
+            docker push containerreg220112.azurecr.io/apache2-container-test
  
  
  
