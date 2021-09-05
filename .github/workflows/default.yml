@@ -42,28 +42,28 @@ jobs:
 #  az storage blob delete-batch --account-name 'gitactiontest' -s app-code
 #   az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
                       
-                      
-  job-2-upload-files-to-azure-storage:
+  job-2-deploy-container-to-ACI:
     needs: [job-1-upload-files-to-azure-storage]
     runs-on: ubuntu-latest
     steps: 
+      - uses: actions/checkout@v2
       - name: Login via Azure CLI
         uses: azure/login@v1 
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Create azure app service plan 
-        uses: azure/CLI@v1
+      - uses: azure/docker-login@v1
         with:
-          azcliversion: 2.0.72
-          inlineScript: |
-            az appservice plan create --resource-group 'container-deploy' --name 'app-service-plan-1' --sku FREE
-      - name: Create azure app service 
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 2.0.72
-          inlineScript: |
-            az webapp create --name 'webapp-${{github.sha}} --resource-group 'container-deploy'  --plan 'app-service-plan-1'
-# This workflow contains a single job called "build"
+            login-server: containerreg220112.azurecr.io
+            username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+            password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+      - run: |
+            docker build . -t apache2-container-test
+            docker push apache2-container-test
+ 
+ 
+ 
+ 
+ # This workflow contains a single job called "build"
 #  job-1-dep-to-local-machine:
     # The type of runner that the job will run on
 #    runs-on: local--x220
