@@ -74,6 +74,18 @@ jobs:
           azcliversion: 2.0.72
           inlineScript: |
             az webapp create -g 'container-deploy' -p 'plan-1' -n 'apache-web-app-app-service' -i 'containerreg220112.azurecr.io/apache2-container-test' 
+      - name: Change deployment slots
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.0.72
+          inlineScript: |
+            az webapp deployment slot swap  -g 'container-deploy' -n 'apache-web-app-app-service' --slot staging \
+            --target-slot production
+
+
+
+
+
 #      - name: 'Deploy to Azure Container Instances'
  #       uses: 'azure/aci-deploy@v1'
   #      with:
