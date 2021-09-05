@@ -59,16 +59,25 @@ jobs:
       - run: |
             docker build . -t containerreg220112.azurecr.io/apache2-container-test
             docker push containerreg220112.azurecr.io/apache2-container-test
-      - name: 'Deploy to Azure Container Instances'
-        uses: 'azure/aci-deploy@v1'
+      - name: create az container
+        uses: azure/CLI@v1
         with:
-          resource-group: 'container-deploy'
-          dns-name-label: 'tmp22011202'
-          image: containerreg220112.azurecr.io/apache2-container-test
-          registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
-          registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
-          name: 'apache-web-app'
-          location: 'east us'
+          azcliversion: 2.0.72
+          inlineScript: |
+            az container create --resource-group 'container-deploy' --name 'apache-web-app' \
+            --image 'containerreg220112.azurecr.io/apache2-container-test' --dns-name-label 'tmp22011202' \
+            --registry-login-server 'containerreg220112.azurecr.io' --registry-password '${{ secrets.CONTAINER_REGISTRY_PASSWORD }}' \
+            --registry-username '${{ secrets.CONTAINER_REGISTRY_USERNAME }}'
+#      - name: 'Deploy to Azure Container Instances'
+ #       uses: 'azure/aci-deploy@v1'
+  #      with:
+   #       resource-group: 'container-deploy'
+    #      dns-name-label: 'tmp22011202'
+     #     image: containerreg220112.azurecr.io/apache2-container-test
+      #    registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+       #   registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+        #  name: 'apache-web-app'
+         # location: 'east us'
  
  
  
