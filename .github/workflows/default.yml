@@ -43,7 +43,7 @@ jobs:
 #   az storage blob upload-batch --account-name 'gitactiontest' -d 'app-code' -s ./ --pattern "*(!.git*)"
                       
   job-2-deploy-container-to-ACI:
-    needs: [job-1-upload-files-to-azure-storage]
+ #   needs: [job-1-upload-files-to-azure-storage]
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
