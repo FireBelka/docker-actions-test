@@ -59,7 +59,7 @@ jobs:
       - run: |
             docker build . -t containerreg220112.azurecr.io/apache2-container-test
             docker push containerreg220112.azurecr.io/apache2-container-test
-      - name: create az container
+      - name: create ACI
         uses: azure/CLI@v1
         with:
           azcliversion: 2.0.72
@@ -68,6 +68,12 @@ jobs:
             --image 'containerreg220112.azurecr.io/apache2-container-test' --dns-name-label 'tmp22011202' \
             --registry-login-server 'containerreg220112.azurecr.io' --registry-password '${{ secrets.CONTAINER_REGISTRY_PASSWORD }}' \
             --registry-username '${{ secrets.CONTAINER_REGISTRY_USERNAME }}'
+      - name: create webapp
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.0.72
+          inlineScript: |
+            az webapp create -g 'container-deploy' -p 'plan-1' -n 'apache-web-app-app-service' -i 'containerreg220112.azurecr.io/apache2-container-test' -s '${{ secrets.CONTAINER_REGISTRY_USERNAME }}' -w '${{ secrets.CONTAINER_REGISTRY_PASSWORD }}'
 #      - name: 'Deploy to Azure Container Instances'
  #       uses: 'azure/aci-deploy@v1'
   #      with:
