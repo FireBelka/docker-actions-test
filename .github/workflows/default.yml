@@ -59,7 +59,16 @@ jobs:
       - run: |
             docker build . -t containerreg220112.azurecr.io/apache2-container-test
             docker push containerreg220112.azurecr.io/apache2-container-test
- 
+      - name: 'Deploy to Azure Container Instances'
+        uses: 'azure/aci-deploy@v1'
+        with:
+          resource-group: 'container-deploy'
+          dns-name-label: 'tmp22011202'
+          image: containerreg220112.azurecr.io/apache2-container-test
+          registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+          registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+          name: 'apache-web-app'
+          location: 'east us'
  
  
  
