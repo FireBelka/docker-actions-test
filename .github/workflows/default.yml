@@ -68,12 +68,19 @@ jobs:
             --image 'containerreg220112.azurecr.io/apache2-container-test' --dns-name-label 'tmp22011202' \
             --registry-login-server 'containerreg220112.azurecr.io' --registry-password '${{ secrets.CONTAINER_REGISTRY_PASSWORD }}' \
             --registry-username '${{ secrets.CONTAINER_REGISTRY_USERNAME }}'
-      - name: create webapp
+      #- name: create webapp
+      #  uses: azure/CLI@v1
+      #  with:
+      #    azcliversion: 2.0.72
+      #    inlineScript: |
+      #      az webapp create -g 'container-deploy' -p 'plan-1' -n 'apache-web-app-app-service' -i 'containerreg220112.azurecr.io/apache2-container-test' 
+      - name: update staging slot config 
         uses: azure/CLI@v1
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az webapp create -g 'container-deploy' -p 'plan-1' -n 'apache-web-app-app-service' -i 'containerreg220112.azurecr.io/apache2-container-test' 
+            az webapp deployment container config --enable-cd true --name 'apache-web-app-app-service' -g 'container-deploy' --slot 'staging'
+
       - name: Change deployment slots
         uses: azure/CLI@v1
         with:
