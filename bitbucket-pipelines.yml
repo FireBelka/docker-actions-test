@@ -10,25 +10,22 @@ pipelines:
       - step:
           name: 'Build and Test'
           script:
-            - echo "Your build and test goes here..."
-      - step:
-          name: 'Lint'
-          script:
-            - echo "Your linting goes here..."
-      - step:
-          name: 'Security scan'
-          script:
-            - echo "Your security scan goes here..."
-
+            - pipe: microsoft/azure-cli-run:1.1.0
+            variables:
+              AZURE_APP_ID: $AZURE_APP_ID
+              AZURE_PASSWORD: $AZURE_PASSWORD
+              AZURE_TENANT_ID: $AZURE_TENANT_ID
+              CLI_COMMAND: 'az account show'
+    
     # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
-    - step:
-        name: 'Deployment to Staging'
-        deployment: staging
-        script:
-          - echo "Your deployment to staging script goes here..."
-    - step:
-        name: 'Deployment to Production'
-        deployment: production
-        trigger: 'manual'
-        script:
-          - echo "Your deployment to production script goes here..."
+    #- step:
+     #   name: 'Deployment to Staging'
+      #  deployment: staging
+       # script:
+        #  - echo "Your deployment to staging script goes here..."
+    #- step:
+     #   name: 'Deployment to Production'
+      #  deployment: production
+       # trigger: 'manual'
+        #script:
+         # - echo "Your deployment to production script goes here..."
