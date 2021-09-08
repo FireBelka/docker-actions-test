@@ -15,12 +15,14 @@
 
 stages:          # List of stages for jobs, and their order of execution
   - build
-  - test
-  - deploy
+ # - test
+  #- deploy
 
 build-docker-container:       # This job runs in the build stage, which runs first.
   stage: build
   image: docker:latest
+  services:
+    - docker:19.03.12-dind
   script:
     - docker -v
     - docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD containerreg22011202.azurecr.io
