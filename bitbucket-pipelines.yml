@@ -15,5 +15,14 @@ pipelines:
                 AZURE_APP_ID: $AZURE_APP_ID
                 AZURE_PASSWORD: $AZURE_PASSWORD
                 AZURE_TENANT_ID: $AZURE_TENANT_ID
-                CLI_COMMAND: 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD containerreg2201120.azurecr.io ; docker build . -t containerreg2201120.azurecr.io/my-app-bitbucket:latest ; docker push containerreg2201120.azurecr.io/my-app-bitbucket:latest'
+                CLI_COMMAND: ''
+      - step:
+          name: Run AZ script
+          image: mcr.microsoft.com/azure-cli
+          script:
+            - az login -u $AZURE_APP_ID -p $AZURE_PASSWORD #setup az credentials
+            - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+            - docker build . -t containerreg2201120.azurecr.io/my-app-bitbucket:latest
+            - docker push containerreg2201120.azurecr.io/my-app-bitbucket:latest
+
      
