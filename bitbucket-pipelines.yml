@@ -23,6 +23,7 @@ pipelines:
           name: Run AZ script
           script:
             - docker -v
+            - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD containerreg2201120.azurecr.io
           services:
             - docker
      
