@@ -14,12 +14,12 @@
 # For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
 
 stages:          # List of stages for jobs, and their order of execution
-  - build
- # - test
+  - build-docker
+  - change-slots
   #- deploy
 
 build-docker-container:       # This job runs in the build stage, which runs first.
-  stage: build
+  stage: build-docker
   image: docker:latest
   services:
     - docker:19.03.12-dind
@@ -28,3 +28,10 @@ build-docker-container:       # This job runs in the build stage, which runs fir
     - docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD containerreg22011202.azurecr.io
     - docker build . -t containerreg22011202.azurecr.io/my-app-gitlab:latest
     - docker push containerreg22011202.azurecr.io/my-app-gitlab:latest
+change-webapp-slots:       # This job runs in the build stage, which runs first.
+  stage: change-slots
+  image: mcr.microsoft.com/azure-cli
+  script:
+    - az -v
+    - az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT_ID
+    - az webapp deployment slot swap  -g 'deploy-webapp-gitlab' -n 'apache-webapp-gitlab' --slot staging --target-slot production
