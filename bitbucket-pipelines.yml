@@ -6,7 +6,7 @@ image: ubuntu:latest
 
 pipelines:
   default:
-    - parallel:
+   # - parallel:
       #- step:
           #name: 'Login to docker'
          # script:
