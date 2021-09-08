@@ -2,7 +2,7 @@
 # Use a skeleton to build, test and deploy using manual and parallel steps
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: atlassian/default-image:2
+image: ubuntu:latest
 
 pipelines:
   default:
@@ -16,7 +16,10 @@ pipelines:
                 AZURE_PASSWORD: $AZURE_PASSWORD
                 AZURE_TENANT_ID: $AZURE_TENANT_ID
                 CLI_COMMAND: 'az account show'
-    
+      - step:
+          name: 'show files'
+          script:
+            - dir
     # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
     #- step:
      #   name: 'Deployment to Staging'
