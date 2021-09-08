@@ -8,7 +8,7 @@ pipelines:
   default:
     - parallel:
       - step:
-          name: 'Build and Test'
+          name: 'Login to docker'
           script:
             - pipe: microsoft/azure-cli-run:1.1.0
               variables:
@@ -17,18 +17,12 @@ pipelines:
                 AZURE_TENANT_ID: $AZURE_TENANT_ID
                 CLI_COMMAND: 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD containerreg2201120.azurecr.io'
       - step:
-          name: 'show files'
-          script:
-            - dir
-    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
-    #- step:
-     #   name: 'Deployment to Staging'
-      #  deployment: staging
-       # script:
-        #  - echo "Your deployment to staging script goes here..."
-    #- step:
-     #   name: 'Deployment to Production'
-      #  deployment: production
-       # trigger: 'manual'
-        #script:
-         # - echo "Your deployment to production script goes here..."
+          name: 'Build and push to azure registry'
+           - pipe: microsoft/azure-cli-run:1.1.0
+              variables:
+                AZURE_APP_ID: $AZURE_APP_ID
+                AZURE_PASSWORD: $AZURE_PASSWORD
+                AZURE_TENANT_ID: $AZURE_TENANT_ID
+                CLI_COMMAND: 'docker build . -t containerreg2201120.azurecr.io/my-app-bitbucket:latest
+                docker push containerreg2201120.azurecr.io/my-app-bitbucket:latest'
+   
