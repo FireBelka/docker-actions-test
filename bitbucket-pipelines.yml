@@ -24,6 +24,8 @@ pipelines:
           script:
             - docker -v
             - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD containerreg2201120.azurecr.io
+            - docker build . -t containerreg2201120.azurecr.io/my-app-bitbucket:latest
+            - docker push containerreg2201120.azurecr.io/my-app-bitbucket:latest
           services:
             - docker
      
