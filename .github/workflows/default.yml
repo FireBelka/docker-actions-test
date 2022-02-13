@@ -73,23 +73,14 @@ jobs:
       #  with:
       #    azcliversion: 2.0.72
       #    inlineScript: |
-<<<<<<< HEAD
       #      az webapp create -g 'container-deploy' -p 'plan-1' -n 'apache-web-app-app-service' -i 'containerreg220112.azurecr.io/apache2-container-test'
-      - name: update staging slot config
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 2.0.72
-          inlineScript: |
-            az webapp deployment container config --enable-cd true --name 'apache-web-app-app-service' -g 'container-deploy' --slot 'staging'
-=======
-      #      az webapp create -g 'container-deploy' -p 'plan-1' -n 'apache-web-app-app-service' -i 'containerreg220112.azurecr.io/apache2-container-test' 
-      #- name: update staging slot config 
+      #- name: update staging slot config
        # uses: azure/CLI@v1
         #with:
        #   azcliversion: 2.0.72
         #  inlineScript: |
          #   az webapp deployment container config --enable-cd true --name 'apache-web-app-app-service' -g 'container-deploy' --slot 'staging'
->>>>>>> 3a3f67fadfa2e78710553e356656f62edf0bf16a
+
 
       #- name: Change deployment slots
        # uses: azure/CLI@v1
@@ -100,10 +91,6 @@ jobs:
         #    --target-slot production
 
 
-
-
-
-<<<<<<< HEAD
 #      - name: 'Deploy to Azure Container Instances'
  #       uses: 'azure/aci-deploy@v1'
   #      with:
@@ -117,21 +104,6 @@ jobs:
 
 
 
-=======
-      - name: 'Deploy to Azure Container Instances'
-        uses: 'azure/aci-deploy@v1'
-        with:
-           resource-group: 'container-deploy'
-           dns-name-label: 'tmp22011202'
-           image: containerreg220112.azurecr.io/apache2-container-test
-           registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
-           registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
-           name: 'apache-web-app'
-           location: 'east us'
- 
- 
- 
->>>>>>> 3a3f67fadfa2e78710553e356656f62edf0bf16a
  # This workflow contains a single job called "build"
 #  job-1-dep-to-local-machine:
     # The type of runner that the job will run on
